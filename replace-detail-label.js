@@ -1,28 +1,31 @@
 (function () {
-    const ORIGINAL_TEXT = "詳細";
-    const REPLACEMENT_TEXT = "Lihat Detail";
-  
-    function replaceDetailText() {
-      document.querySelectorAll("span").forEach((el) => {
-        if (el.textContent && el.textContent.trim() === ORIGINAL_TEXT) {
-          el.textContent = REPLACEMENT_TEXT;
+  const REPLACEMENTS = [
+    { original: "詳細", replaceWith: "Lihat Detail" },
+    { original: "並べ替え", replaceWith: "Sort" },
+  ];
+
+  function replaceTextContent() {
+    document.querySelectorAll("span").forEach((el) => {
+      REPLACEMENTS.forEach(({ original, replaceWith }) => {
+        if (el.textContent && el.textContent.trim() === original) {
+          el.textContent = replaceWith;
         }
       });
-    }
-  
-    // 初回実行
-    document.addEventListener("DOMContentLoaded", () => {
-      replaceDetailText();
-  
-      // DOM変化を監視して置換し続ける
-      const observer = new MutationObserver(() => {
-        replaceDetailText();
-      });
-  
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
     });
-  })();
-  
+  }
+
+  // 初回実行
+  document.addEventListener("DOMContentLoaded", () => {
+    replaceTextContent();
+
+    // DOM変化を監視して置換し続ける
+    const observer = new MutationObserver(() => {
+      replaceTextContent();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  });
+})();
